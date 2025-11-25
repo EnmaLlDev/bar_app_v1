@@ -13,9 +13,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bar App',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
       home: const HomeView(),
     );
   }

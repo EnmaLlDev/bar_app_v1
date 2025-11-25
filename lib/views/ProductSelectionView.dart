@@ -16,26 +16,31 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Seleccionar"),
+        title: const Text("PRODUCTOS",
+         style: 
+          TextStyle(fontWeight: FontWeight.bold),), 
+          backgroundColor: Colors.amberAccent,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.check, size: 30),
-            onPressed: () {
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
+            ), onPressed: () {
               // Devolver los seleccionados al cerrar
               Navigator.pop(context, viewModel.getSelected());
-            },
+            }, 
+            child: const Text('GUARDAR PEDIDO'),
           )
         ],
       ),
       body: ListView.builder(
         itemCount: viewModel.availableProducts.length,
         itemBuilder: (context, index) {
-          final product = viewModel.availableProducts[index];
-          // Color de fondo si está seleccionado
-          final isSelected = product.quantity > 0;
+          final producto = viewModel.availableProducts[index];
+          final isSelected = producto.cantidad > 0;
           
           return Card(
-            color: isSelected ? Colors.blue[50] : null,
+            color: isSelected ? Colors.blue: null,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -44,27 +49,26 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                        Text("\$${product.price.toStringAsFixed(2)}"),
+                        Text(producto.nombre, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                        Text("\$${producto.precio.toStringAsFixed(2)}"),
                       ],
                     ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.remove_circle_outline),
-                    color: Colors.red,
                     onPressed: () {
                       setState(() {
-                        if (product.quantity > 0) product.quantity--;
+                        if (producto.cantidad > 0) producto.cantidad--;
                       });
                     },
                   ),
-                  Text("${product.quantity}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text("${producto.cantidad}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
                     color: Colors.green,
                     onPressed: () {
                       setState(() {
-                        product.quantity++;
+                        producto.cantidad++;
                       });
                     },
                   ),
@@ -78,14 +82,17 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
         color: Colors.white,
         padding: const EdgeInsets.all(16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Toque check arriba para guardar", style: TextStyle(color: Colors.grey)),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white,
+              ),
               onPressed: () {
-                Navigator.pop(context, viewModel.getSelected());
+                Navigator.pop(context, null); // Cancelar sin guardar
               },
-              child: const Text("Guardar"),
+              child: const Text("CANCELAR SELECCIÓN"),
             )
           ],
         ),

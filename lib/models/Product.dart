@@ -1,13 +1,13 @@
 
 class Product {
-  final String name;
-  final double price;
-  int quantity;
+  final String nombre;
+  final double precio;
+  int cantidad;
 
-  Product({required this.name, required this.price, this.quantity = 0});
+  Product({required this.nombre, required this.precio, this.cantidad = 0});
 
   // Método para crear una copia del producto (útil para pasar datos sin romper referencias)
   Product copy() {
-    return Product(name: name, price: price, quantity: quantity);
+    return Product(nombre: nombre, precio: precio, cantidad: cantidad);
   }
 }
