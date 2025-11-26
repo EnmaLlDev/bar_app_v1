@@ -206,7 +206,6 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                     ),
                 );
 
-                // Si volvimos con datos, actualizamos
                 if (result != null && result is List<Producto>) {
                   setState(() {
                     viewModel.setProducts(result);

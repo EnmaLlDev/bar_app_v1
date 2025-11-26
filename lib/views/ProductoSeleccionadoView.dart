@@ -18,7 +18,6 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
   @override
   void initState() {
     super.initState();
-    // Cargar cantidades existentes si hay productos actuales
     if (widget.productosActuales != null) {
       viewModel.loadExistingProducts(widget.productosActuales!);
     }
@@ -39,7 +38,6 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.white,
             ), onPressed: () {
-              // Devolver los seleccionados al cerrar
               Navigator.pop(context, viewModel.getSelected());
             }, 
             child: const Text('CONFIRMAR'),
@@ -105,7 +103,8 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
               ),
               
               onPressed: () {
-                Navigator.pop(context, null); // Cancelar sin guardar
+                viewModel.resetSelection();
+                Navigator.pop(context, null); 
               },
               child: const Text("CANCELAR"),
             )

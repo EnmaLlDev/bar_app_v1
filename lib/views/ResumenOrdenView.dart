@@ -24,7 +24,7 @@ class ResumenOrdenView extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                const Icon(Icons.receipt_long, size: 50, color: Colors.amberAccent,),
+                const Icon(Icons.receipt_long, size: 50, color: Colors.black,),
                 const SizedBox(height: 10),
                 Text(
                   order.nombreMesa,
