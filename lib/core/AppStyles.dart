@@ -1,4 +1,4 @@
-/*
+
 import 'package:flutter/material.dart';
 
 class Appstyles {
@@ -18,4 +18,3 @@ class Appstyles {
     color: Color(0xFF5A5A5A));
 }
 
-*/

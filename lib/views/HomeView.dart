@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/views/CrearOrdenView.dart';
@@ -27,62 +26,69 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "HOME", 
-          style: TextStyle( fontWeight: FontWeight.bold),
-          ),
-        backgroundColor: Colors.amberAccent),
-        backgroundColor: Colors.grey[200],
+          "HOME - BAR APP",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.amberAccent,
+      ),
+      backgroundColor: Colors.grey[200],
       body: 
-          viewModel.ordenes.isEmpty
-          ? const Center(child: Text("NO HAY PEDIDOS", 
-            style: TextStyle(
-              fontSize: 32, 
-              color: Colors.black)))
-          : ListView.separated(
-              itemCount: viewModel.ordenes.length,
-              separatorBuilder: (_, __) => const Divider(),
-              itemBuilder: (context, index) {
-                final orden = viewModel.ordenes[index];
-                return ListTile(
-                  title: Text(
-                    orden.nombreMesa,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+      viewModel.ordenes.isEmpty
+          ? Container(
+            alignment: Alignment.center,
+              child: Text(
+                "NO EXISTEN ORDENES", style: TextStyle(fontSize: 32, color: Colors.black),
+              ),
+            )
+          : Container(
+            padding: const EdgeInsets.all(16),
+              child: ListView.builder(
+                itemCount: viewModel.ordenes.length,
+                itemBuilder: (context, index) {
+                  final orden = viewModel.ordenes[index];
+                  return ListTile(
+                    title: Text(
+                      orden.nombreMesa,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    "${orden.totalPrecio.toStringAsFixed(2)} €",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.edit, color: Colors.black),
-                    onPressed: () {
+                    subtitle: Text(
+                      "${orden.totalPrecio.toStringAsFixed(2)} €",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    trailing: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amberAccent,
+                        foregroundColor: Colors.black,
+                      ),
+                      child: Text('ACTUALIZAR'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CrearOrdenView(ordenExistente: orden),
+                          ),
+                        );
+                      },
+                    ),
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CrearOrdenView(ordenExistente: orden),
+                          builder: (context) => ResumenOrdenView(order: orden),
                         ),
                       );
                     },
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ResumenOrdenView(order: orden),
-                      ),
-                    );
-                  },
-                );
-              },
+                  );
+                },
+              ),
             ),
-        floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amberAccent,
-        child: 
-        const Icon(
-          Icons.add, 
-          color: Colors.black),
+        child: const Icon(Icons.add, color: Colors.black),
         onPressed: () {
           Navigator.push(
             context,

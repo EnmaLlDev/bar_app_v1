@@ -19,7 +19,7 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
   void initState() {
     super.initState();
     if (widget.productosActuales != null) {
-      viewModel.loadExistingProducts(widget.productosActuales!);
+      viewModel.loadProducts(widget.productosActuales!);
     }
   }
 
@@ -103,8 +103,11 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
               ),
               
               onPressed: () {
-                viewModel.resetSelection();
-                Navigator.pop(context, null); 
+                setState(() {
+                  viewModel.resetSelection();
+                });
+                // Return the (now empty) selection to the caller so the table's products are reset
+                Navigator.pop(context, viewModel.getSelected());
               },
               child: const Text("CANCELAR"),
             )
