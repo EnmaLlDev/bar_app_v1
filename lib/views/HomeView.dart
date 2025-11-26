@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
-import 'package:pruebas_bar/views/CreateOrderView.dart';
-import 'package:pruebas_bar/views/OrderSumaryView.dart';
+import 'package:pruebas_bar/views/CrearOrdenView.dart';
+import 'package:pruebas_bar/views/ResumenOrdenView.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -31,41 +31,53 @@ class _HomeViewState extends State<HomeView> {
           style: TextStyle( fontWeight: FontWeight.bold),
           ),
         backgroundColor: Colors.amberAccent),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.grey[200],
       body: 
-          viewModel.orders.isEmpty
+          viewModel.ordenes.isEmpty
           ? const Center(child: Text("NO HAY PEDIDOS", 
             style: TextStyle(
               fontSize: 32, 
-              color: Colors.white)))
-          : ListView.builder(
-              itemCount: viewModel.orders.length,
+              color: Colors.black)))
+          : ListView.separated(
+              itemCount: viewModel.ordenes.length,
+              separatorBuilder: (_, __) => const Divider(),
               itemBuilder: (context, index) {
-                final order = viewModel.orders[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  color: Colors.white,
-                  child: ListTile(
-                    title: Text(
-                      order.nombreMesa, 
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(
-                      "${order.totalProductos} productos"),
-                    trailing: Text("\$${order.totalPrecio.toStringAsFixed(2)}", 
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold, 
-                        color: Colors.green)),
-                    onTap: () {
+                final orden = viewModel.ordenes[index];
+                return ListTile(
+                  title: Text(
+                    orden.nombreMesa,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "${orden.totalPrecio.toStringAsFixed(2)} €",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.black),
+                    onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => OrderSummaryView(order: order)),
+                        MaterialPageRoute(
+                          builder: (context) => CrearOrdenView(ordenExistente: orden),
+                        ),
                       );
                     },
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResumenOrdenView(order: orden),
+                      ),
+                    );
+                  },
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amberAccent,
         child: 
         const Icon(
@@ -74,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const CreateOrderView()),
+            MaterialPageRoute(builder: (context) => const CrearOrdenView()),
           );
         },
       ),

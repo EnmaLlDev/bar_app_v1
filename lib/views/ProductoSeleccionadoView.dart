@@ -1,23 +1,36 @@
 
 import 'package:flutter/material.dart';
-import 'package:pruebas_bar/viewmodel/ProductSelectionViewModel.dart';
+import 'package:pruebas_bar/models/Producto.dart';
+import 'package:pruebas_bar/viewmodel/ProductoSeleccionadoViewModel.dart';
 
-class ProductSelectionView extends StatefulWidget {
-  const ProductSelectionView({super.key});
+class ProductoSeleccionadoView extends StatefulWidget {
+  final List<Producto>? productosActuales;
+  
+  const ProductoSeleccionadoView({super.key, this.productosActuales});
 
   @override
-  State<ProductSelectionView> createState() => _ProductSelectionViewState();
+  State<ProductoSeleccionadoView> createState() => _ProductoSeleccionadoViewState();
 }
 
-class _ProductSelectionViewState extends State<ProductSelectionView> {
-  final ProductSelectionViewModel viewModel = ProductSelectionViewModel();
+class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
+  final ProductoSeleccionadoViewModel viewModel = ProductoSeleccionadoViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    // Cargar cantidades existentes si hay productos actuales
+    if (widget.productosActuales != null) {
+      viewModel.loadExistingProducts(widget.productosActuales!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("PRODUCTOS",
-         style: 
+        style: 
           TextStyle(fontWeight: FontWeight.bold),), 
           backgroundColor: Colors.amberAccent,
         actions: [
@@ -29,7 +42,7 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
               // Devolver los seleccionados al cerrar
               Navigator.pop(context, viewModel.getSelected());
             }, 
-            child: const Text('GUARDAR PEDIDO'),
+            child: const Text('CONFIRMAR'),
           )
         ],
       ),
@@ -40,9 +53,9 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
           final isSelected = producto.cantidad > 0;
           
           return Card(
-            color: isSelected ? Colors.blue: null,
+            color: isSelected ? Colors.amberAccent: Colors.grey[300],
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8),
               child: Row(
                 children: [
                   Expanded(
@@ -50,7 +63,7 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(producto.nombre, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                        Text("\$${producto.precio.toStringAsFixed(2)}"),
+                        Text("${producto.precio.toStringAsFixed(2)} €", style: const TextStyle(fontSize: 14))
                       ],
                     ),
                   ),
@@ -65,7 +78,6 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
                   Text("${producto.cantidad}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
-                    color: Colors.green,
                     onPressed: () {
                       setState(() {
                         producto.cantidad++;
@@ -82,17 +94,20 @@ class _ProductSelectionViewState extends State<ProductSelectionView> {
         color: Colors.white,
         padding: const EdgeInsets.all(16),
         child: Row(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
+              
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
                 foregroundColor: Colors.white,
               ),
+              
               onPressed: () {
                 Navigator.pop(context, null); // Cancelar sin guardar
               },
-              child: const Text("CANCELAR SELECCIÓN"),
+              child: const Text("CANCELAR"),
             )
           ],
         ),

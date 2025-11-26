@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+/*
+import 'package:flutter/material.dart';
 
 class Appstyles {
 
@@ -16,3 +17,5 @@ class Appstyles {
     fontWeight: FontWeight.bold, 
     color: Color(0xFF5A5A5A));
 }
+
+*/

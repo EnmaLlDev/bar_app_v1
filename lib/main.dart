@@ -1,5 +1,5 @@
+import 'views/HomeView.dart';
 import 'package:flutter/material.dart';
-import 'package:pruebas_bar/views/HomeView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Bar App',
+      title: 'Bar App v1.0',
       home: const HomeView(),
     );
   }
