@@ -40,9 +40,8 @@ class ResumenOrdenView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.separated(
+            child: ListView.builder(
               itemCount: order.productos.length,
-              separatorBuilder: (_, __) => const Divider(),
               itemBuilder: (context, index) {
                 final producto = order.productos[index];
                 return ListView(

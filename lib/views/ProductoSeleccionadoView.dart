@@ -45,13 +45,13 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
         ],
       ),
       body: ListView.builder(
-        itemCount: viewModel.availableProducts.length,
+        itemCount: viewModel.productosBarra.length,
         itemBuilder: (context, index) {
-          final producto = viewModel.availableProducts[index];
+          final producto = viewModel.productosBarra[index];
           final isSelected = producto.cantidad > 0;
           
           return Card(
-            color: isSelected ? Colors.amberAccent: Colors.grey[300],
+            color: isSelected ? Colors.amberAccent[100]: Colors.grey[300],
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Row(

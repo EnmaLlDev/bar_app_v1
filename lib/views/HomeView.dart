@@ -25,13 +25,14 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           "HOME - BAR APP",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.amberAccent,
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       body: 
       viewModel.ordenes.isEmpty
           ? Container(
@@ -44,9 +45,16 @@ class _HomeViewState extends State<HomeView> {
             padding: const EdgeInsets.all(16),
               child: ListView.builder(
                 itemCount: viewModel.ordenes.length,
+              
                 itemBuilder: (context, index) {
                   final orden = viewModel.ordenes[index];
                   return ListTile(
+                    
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    tileColor: Colors.grey[200],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     title: Text(
                       orden.nombreMesa,
                       style: const TextStyle(
@@ -58,26 +66,29 @@ class _HomeViewState extends State<HomeView> {
                       "${orden.totalPrecio.toStringAsFixed(2)} €",
                       style: const TextStyle(fontSize: 16),
                     ),
+
                     trailing: ElevatedButton(
+                      
                       style: ElevatedButton.styleFrom(
+                        fixedSize: Size(150, 100),
                         backgroundColor: Colors.amberAccent,
                         foregroundColor: Colors.black,
                       ),
                       child: Text('ACTUALIZAR'),
+
+
                       onPressed: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CrearOrdenView(ordenExistente: orden),
+                          context, MaterialPageRoute(
+                            builder: (context) => CrearOrdenView(ordenExistente: orden),
                           ),
                         );
                       },
                     ),
+
                     onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                        context, MaterialPageRoute(
                           builder: (context) => ResumenOrdenView(order: orden),
                         ),
                       );
@@ -91,8 +102,7 @@ class _HomeViewState extends State<HomeView> {
         child: const Icon(Icons.add, color: Colors.black),
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CrearOrdenView()),
+            context, MaterialPageRoute(builder: (context) => const CrearOrdenView()),
           );
         },
       ),

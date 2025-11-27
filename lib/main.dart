@@ -2,17 +2,17 @@ import 'views/HomeView.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const BarApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BarApp extends StatelessWidget {
+  const BarApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Bar App v1.0',
+      title: 'Bar App v.1.0.1',
       home: const HomeView(),
     );
   }

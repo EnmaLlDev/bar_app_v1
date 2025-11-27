@@ -13,12 +13,15 @@ class CrearOrdenViewModel {
     productosSeleccionados = productos;
   }
 
-  double get total => productosSeleccionados.fold(0.0, (sum, producto) => sum + (producto.precio * producto.cantidad));
+  double get total => productosSeleccionados.fold(0.0, (sum, producto) => sum 
+  + (producto.precio * producto.cantidad));
 
   Orden? buildOrder() {
     if (nombreMesa.isEmpty || productosSeleccionados.isEmpty) {
       return null;
     }
-    return Orden(nombreMesa: nombreMesa, productos: List.from(productosSeleccionados));
+    return Orden(
+      nombreMesa: nombreMesa, 
+      productos: List.from(productosSeleccionados));
   }
 }
