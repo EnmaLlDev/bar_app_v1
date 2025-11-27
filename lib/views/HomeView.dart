@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
-import 'package:pruebas_bar/views/CrearOrdenView.dart';
-import 'package:pruebas_bar/views/ResumenOrdenView.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -74,23 +72,19 @@ class _HomeViewState extends State<HomeView> {
                         backgroundColor: Colors.amberAccent,
                         foregroundColor: Colors.black,
                       ),
-                      child: Text('ACTUALIZAR'),
+                      child: Text('DETALLE'),
 
 
                       onPressed: () {
-                        Navigator.push(
-                          context, MaterialPageRoute(
-                            builder: (context) => CrearOrdenView(ordenExistente: orden),
-                          ),
+                        Navigator.pushNamed(
+                          context,'/crear', arguments: orden,
                         );
                       },
                     ),
 
                     onTap: () {
-                      Navigator.push(
-                        context, MaterialPageRoute(
-                          builder: (context) => ResumenOrdenView(order: orden),
-                        ),
+                      Navigator.pushNamed(
+                        context, '/resumen', arguments: orden,
                       );
                     },
                   );
@@ -101,9 +95,7 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.amberAccent,
         child: const Icon(Icons.add, color: Colors.black),
         onPressed: () {
-          Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const CrearOrdenView()),
-          );
+          Navigator.pushNamed(context, '/crear');
         },
       ),
     );

@@ -1,6 +1,5 @@
 
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../models/Orden.dart';
 
@@ -26,7 +25,7 @@ class HomeViewModel extends ChangeNotifier {
   Orden? findOrderByTableName(String nombreMesa) {
     try {
       return ordenes.firstWhere((orden) => orden.nombreMesa == nombreMesa);
-    } catch (e) {
+    } catch (excption) {
       return null;
     }
   }

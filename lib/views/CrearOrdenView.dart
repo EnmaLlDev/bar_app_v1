@@ -7,11 +7,14 @@ import 'package:pruebas_bar/views/ProductoSeleccionadoView.dart';
 
 class CrearOrdenView extends StatefulWidget {
   final Orden? ordenExistente;
-  const CrearOrdenView({super.key, this.ordenExistente});
+
+  const CrearOrdenView({super.key, 
+    this.ordenExistente});
 
   @override
   State<CrearOrdenView> createState() => _CrearOrdenViewState();
 }
+
 class _CrearOrdenViewState extends State<CrearOrdenView> {
 
   final CrearOrdenViewModel viewModel = CrearOrdenViewModel();
@@ -96,8 +99,10 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                     backgroundColor: Colors.grey[200],
                     foregroundColor: Colors.black,
                   ),
-                  onPressed: () async {
-                    final result = await Navigator.push(
+                  onPressed: () 
+                  async {
+                    final result = await 
+                    Navigator.push(
                       context, MaterialPageRoute(
                         builder: (context) => ProductoSeleccionadoView(
                           productosActuales: viewModel.productosSeleccionados,
@@ -142,8 +147,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                           }
                         }
                       : null,
-                  child: Text(
-                    esEdicion ? 'ACTUALIZAR PEDIDO' : 'GUARDAR PEDIDO',
+                  child: Text( esEdicion ? 'ACTUALIZAR PEDIDO' : 'GUARDAR PEDIDO',
                   ),
                 ),
               ],

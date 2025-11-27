@@ -95,21 +95,22 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-                foregroundColor: Colors.white,
+            Expanded(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  foregroundColor: Colors.white,
+                ),
+                
+                onPressed: () {
+                  setState(() {
+                    viewModel.resetSelection();
+                  });
+                  // Return the (now empty) selection to the caller so the table's products are reset
+                  Navigator.pop(context, viewModel.getSelected());
+                },
+                child: const Text("CANCELAR"),
               ),
-              
-              onPressed: () {
-                setState(() {
-                  viewModel.resetSelection();
-                });
-                // Return the (now empty) selection to the caller so the table's products are reset
-                Navigator.pop(context, viewModel.getSelected());
-              },
-              child: const Text("CANCELAR"),
             )
           ],
         ),
