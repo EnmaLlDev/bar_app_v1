@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'views/HomeView.dart';
 import 'views/CrearOrdenView.dart';
 import 'views/ResumenOrdenView.dart';
-import 'package:pruebas_bar/models/Orden.dart';
+import 'providers/OrdenProvider.dart';
 
 void main() {
   runApp(const BarApp());
@@ -13,28 +14,29 @@ class BarApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bar App v.1.0.1',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomeView(),
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == '/resumen') {
-          final orden = settings.arguments as Orden;
-          return MaterialPageRoute(
-            builder: (context) => ResumenOrdenView(order: orden),
-          );
-          
-        } else if (settings.name == '/crear') {
-
-          final ordenExistente = settings.arguments as Orden?;
-          return MaterialPageRoute(
-            builder: (context) => CrearOrdenView(ordenExistente: ordenExistente),
-          );
-        }
-        return null;
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => OrdenProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Bar App v.1.0.1',
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomeView(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == '/resumen') {
+            return MaterialPageRoute(
+              builder: (context) => const ResumenOrdenView(),
+            );
+          } else if (settings.name == '/crear') {
+            return MaterialPageRoute(
+              builder: (context) => const CrearOrdenView(),
+            );
+          }
+          return null;
+        },
+      ),
     );
   }
 }

@@ -1,11 +1,12 @@
 
-import 'dart:math';
 import 'package:flutter/material.dart';
-import '../models/Orden.dart';
+import 'package:pruebas_bar/models/Orden.dart';
 
 class HomeViewModel extends ChangeNotifier {
   static final HomeViewModel _instance = HomeViewModel._internal();
-  factory HomeViewModel() => _instance;
+  factory HomeViewModel() {
+    return _instance;
+  }
   HomeViewModel._internal();
 
   List<Orden> ordenes = [];
@@ -24,7 +25,9 @@ class HomeViewModel extends ChangeNotifier {
 
   Orden? findOrderByTableName(String nombreMesa) {
     try {
-      return ordenes.firstWhere((orden) => orden.nombreMesa == nombreMesa);
+      return ordenes.firstWhere((orden) {
+        return orden.nombreMesa == nombreMesa;
+      });
     } catch (excption) {
       return null;
     }

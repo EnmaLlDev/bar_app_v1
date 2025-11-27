@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
+import 'package:pruebas_bar/providers/OrdenProvider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -24,8 +26,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "HOME - BAR APP",
+        title: const Text("HOME - BAR APP",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.amberAccent,
@@ -35,8 +36,8 @@ class _HomeViewState extends State<HomeView> {
       viewModel.ordenes.isEmpty
           ? Container(
             alignment: Alignment.center,
-              child: Text(
-                "NO EXISTEN ORDENES", style: TextStyle(fontSize: 32, color: Colors.black),
+              child: Text("NO EXISTEN ORDENES", 
+              style: TextStyle(fontSize: 32, color: Colors.black),
               ),
             )
           : Container(
@@ -60,6 +61,7 @@ class _HomeViewState extends State<HomeView> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     subtitle: Text(
                       "${orden.totalPrecio.toStringAsFixed(2)} €",
                       style: const TextStyle(fontSize: 16),
@@ -73,19 +75,15 @@ class _HomeViewState extends State<HomeView> {
                         foregroundColor: Colors.black,
                       ),
                       child: Text('DETALLE'),
-
-
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,'/crear', arguments: orden,
-                        );
+                        context.read<OrdenProvider>().setOrden(orden);
+                        Navigator.pushNamed(context, '/crear');
                       },
                     ),
 
                     onTap: () {
-                      Navigator.pushNamed(
-                        context, '/resumen', arguments: orden,
-                      );
+                      context.read<OrdenProvider>().setOrden(orden);
+                      Navigator.pushNamed(context, '/resumen');
                     },
                   );
                 },

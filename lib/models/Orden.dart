@@ -1,17 +1,30 @@
 import 'Producto.dart';
+
 class Orden {
   final String nombreMesa;
-  final List<Producto > productos;
+  final List<Producto> productos;
 
-  Orden({required this.nombreMesa, required this.productos});
+  Orden({
+    required this.nombreMesa, 
+    required this.productos});
 
   int get totalProductos {
-    return productos.fold(0, (suma, producto) => suma 
-    + producto.cantidad);
+    if (productos.isEmpty) {
+      return 0;
+    } else {
+      return productos
+          .map((producto) => producto.cantidad)
+          .reduce((a, b) => a + b);
+    }
   }
 
   double get totalPrecio {
-    return productos.fold(0.0, (suma, producto) => suma 
-    + (producto.precio * producto.cantidad));
+    if (productos.isEmpty) {
+      return 0.0;
+    } else {
+      return productos
+          .map((producto) => producto.precio * producto.cantidad)
+          .reduce((a, b) => a + b);
+    }
   }
 }

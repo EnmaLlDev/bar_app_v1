@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pruebas_bar/models/Orden.dart';
 import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/viewmodel/CrearOrdenViewModel.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/views/ProductoSeleccionadoView.dart';
+import 'package:pruebas_bar/providers/OrdenProvider.dart';
 
 class CrearOrdenView extends StatefulWidget {
-  final Orden? ordenExistente;
-
-  const CrearOrdenView({super.key, 
-    this.ordenExistente});
+  const CrearOrdenView({super.key});
 
   @override
   State<CrearOrdenView> createState() => _CrearOrdenViewState();
@@ -28,13 +27,14 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
   void initState() {
     super.initState();
 
-    if (widget.ordenExistente != null) {
+    final ordenProvider = context.read<OrdenProvider>();
+    final ordenExistente = ordenProvider.ordenActual;
 
+    if (ordenExistente != null) {
       esEdicion = true;
-      mesaController.text = widget.ordenExistente!.nombreMesa;
-      viewModel.setTableName(widget.ordenExistente!.nombreMesa);
-      viewModel.setProducts(List.from(widget.ordenExistente!.productos));
-      
+      mesaController.text = ordenExistente.nombreMesa;
+      viewModel.setTableName(ordenExistente.nombreMesa);
+      viewModel.setProducts(List.from(ordenExistente.productos));
     }
   }
 
@@ -46,14 +46,11 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
 
   @override
   Widget build(BuildContext context) {
-    final bool estaGuardado =
-        viewModel.nombreMesa.isNotEmpty &&
-        viewModel.productosSeleccionados.isNotEmpty;
+    final bool estaGuardado = viewModel.nombreMesa.isNotEmpty && viewModel.productosSeleccionados.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'PEDIDOS',
+        title: const Text('PEDIDOS',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.amberAccent,
@@ -104,9 +101,10 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                     final result = await 
                     Navigator.push(
                       context, MaterialPageRoute(
-                        builder: (context) => ProductoSeleccionadoView(
-                          productosActuales: viewModel.productosSeleccionados,
-                        ),
+                        builder: (context) {
+                          return ProductoSeleccionadoView( productosActuales: viewModel.productosSeleccionados,
+                          );
+                        },
                       ),
                     );
 
@@ -129,17 +127,18 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                   ),
                   onPressed: estaGuardado
                       ? () {
-                          final Orden? ordenNueva = viewModel.buildOrder();
+                          final Orden? ordenNueva = viewModel.crearOrden();
                           if (ordenNueva != null) {
                             if (esEdicion) {
                               final index = homeViewModel.ordenes.indexWhere(
                                 (orden) =>
                                     orden.nombreMesa ==
-                                    widget.ordenExistente!.nombreMesa,
+                                    context.read<OrdenProvider>().ordenActual!.nombreMesa,
                               );
                               if (index != -1) {
                                 homeViewModel.updateOrder(index, ordenNueva);
                               }
+                              context.read<OrdenProvider>().clearOrden();
                             } else {
                               homeViewModel.addOrder(ordenNueva);
                             }
@@ -147,15 +146,14 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                           }
                         }
                       : null,
-                  child: Text( esEdicion ? 'ACTUALIZAR PEDIDO' : 'GUARDAR PEDIDO',
+                  child: Text( esEdicion ? 'GUARDAR CAMBIOS' : 'GUARDAR PEDIDO',
                   ),
                 ),
               ],
             ),
 
             const SizedBox(height: 10),
-            const Text(
-              'PRODUCTOS',
+            const Text('PRODUCTOS',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,

@@ -19,7 +19,7 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
   void initState() {
     super.initState();
     if (widget.productosActuales != null) {
-      viewModel.loadProducts(widget.productosActuales!);
+      viewModel.cargarProductos(widget.productosActuales!);
     }
   }
 
@@ -29,9 +29,8 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("PRODUCTOS",
-        style: 
-          TextStyle(fontWeight: FontWeight.bold),), 
-          backgroundColor: Colors.amberAccent,
+        style: TextStyle(fontWeight: FontWeight.bold),), 
+        backgroundColor: Colors.amberAccent,
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -60,8 +59,10 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(producto.nombre, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                        Text("${producto.precio.toStringAsFixed(2)} €", style: const TextStyle(fontSize: 14))
+                        Text(producto.nombre, 
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                        Text("${producto.precio.toStringAsFixed(2)} €", 
+                          style: const TextStyle(fontSize: 14))
                       ],
                     ),
                   ),
@@ -101,12 +102,11 @@ class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
                   backgroundColor: Colors.redAccent,
                   foregroundColor: Colors.white,
                 ),
-                
+
                 onPressed: () {
                   setState(() {
                     viewModel.resetSelection();
                   });
-                  // Return the (now empty) selection to the caller so the table's products are reset
                   Navigator.pop(context, viewModel.getSelected());
                 },
                 child: const Text("CANCELAR"),

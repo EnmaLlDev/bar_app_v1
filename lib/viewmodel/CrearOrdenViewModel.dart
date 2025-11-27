@@ -1,5 +1,5 @@
-import '../models/Orden.dart';
-import '../models/Producto.dart';
+import 'package:pruebas_bar/models/Orden.dart';
+import 'package:pruebas_bar/models/Producto.dart';
 
 class CrearOrdenViewModel {
   String nombreMesa = "";
@@ -13,13 +13,18 @@ class CrearOrdenViewModel {
     productosSeleccionados = productos;
   }
 
-  double get total => productosSeleccionados.fold(0.0, (sum, producto) => sum 
-  + (producto.precio * producto.cantidad));
+  double get total {
+    return productosSeleccionados.fold(0.0, (sum, producto) {
+      return sum 
+      + (producto.precio * producto.cantidad);
+    });
+  }
 
-  Orden? buildOrder() {
+  Orden? crearOrden() {
     if (nombreMesa.isEmpty || productosSeleccionados.isEmpty) {
       return null;
     }
+
     return Orden(
       nombreMesa: nombreMesa, 
       productos: List.from(productosSeleccionados));
