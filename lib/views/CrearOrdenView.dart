@@ -104,7 +104,6 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                     Navigator.push(
                       context, MaterialPageRoute(
                         builder: (context) {
-                          final orden = context.read<Proveedor>().ordenActual;
                           return ResumenOrdenView( );
                         },
                       ),
