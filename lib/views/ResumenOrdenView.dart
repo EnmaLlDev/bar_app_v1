@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pruebas_bar/providers/OrdenProvider.dart';
+import 'package:pruebas_bar/providers/proveedor.dart';
 
 class ResumenOrdenView extends StatelessWidget {
   const ResumenOrdenView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final order = context.watch<OrdenProvider>().ordenActual;
+    final order = context.watch<Proveedor>().ordenActual;
 
     if (order == null) {
       return Scaffold(

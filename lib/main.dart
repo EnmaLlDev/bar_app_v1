@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'views/HomeView.dart';
 import 'views/CrearOrdenView.dart';
 import 'views/ResumenOrdenView.dart';
-import 'providers/OrdenProvider.dart';
+import 'providers/proveedor.dart';
 
 void main() {
   runApp(const BarApp());
@@ -16,7 +16,7 @@ class BarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => OrdenProvider()),
+        ChangeNotifierProvider(create: (_) => Proveedor()),
       ],
       child: MaterialApp(
         title: 'Bar App v.1.0.1',

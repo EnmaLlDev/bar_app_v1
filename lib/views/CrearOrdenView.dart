@@ -5,7 +5,8 @@ import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/viewmodel/CrearOrdenViewModel.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/views/ProductoSeleccionadoView.dart';
-import 'package:pruebas_bar/providers/OrdenProvider.dart';
+import 'package:pruebas_bar/providers/proveedor.dart';
+import 'package:pruebas_bar/views/ResumenOrdenView.dart';
 
 class CrearOrdenView extends StatefulWidget {
   const CrearOrdenView({super.key});
@@ -27,7 +28,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
   void initState() {
     super.initState();
 
-    final ordenProvider = context.read<OrdenProvider>();
+    final ordenProvider = context.read<Proveedor>();
     final ordenExistente = ordenProvider.ordenActual;
 
     if (ordenExistente != null) {
@@ -57,9 +58,9 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextField(
               controller: mesaController,
@@ -88,12 +89,39 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
             const SizedBox(height: 20),
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(15),
                     backgroundColor: Colors.grey[200],
+                    foregroundColor: Colors.black,
+                  ),
+                  onPressed: () 
+                  async {
+                    final result = await 
+                    Navigator.push(
+                      context, MaterialPageRoute(
+                        builder: (context) {
+                          final orden = context.read<Proveedor>().ordenActual;
+                          return ResumenOrdenView( );
+                        },
+                      ),
+                    );
+
+                    if (result != null && result is List<Producto>) {
+                      setState(() {
+                        viewModel.setProducts(result);
+                      });
+                    }
+                  },
+                  child: const Text('RESUMEN'),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                    backgroundColor: Colors.amberAccent[100],
                     foregroundColor: Colors.black,
                   ),
                   onPressed: () 
@@ -114,14 +142,13 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                       });
                     }
                   },
-                  child: const Text('SELECCIONAR PRODUCTOS'),
+                  child: const Text('PRODUCTOS'),
                 ),
-                const SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: estaGuardado
                         ? Colors.amberAccent
-                        : Colors.grey,
+                        : Colors.grey[400],
                     foregroundColor: Colors.black,
                     padding: const EdgeInsets.all(15),
                   ),
@@ -133,12 +160,12 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                               final index = homeViewModel.ordenes.indexWhere(
                                 (orden) =>
                                     orden.nombreMesa ==
-                                    context.read<OrdenProvider>().ordenActual!.nombreMesa,
+                                    context.read<Proveedor>().ordenActual!.nombreMesa,
                               );
                               if (index != -1) {
                                 homeViewModel.updateOrder(index, ordenNueva);
                               }
-                              context.read<OrdenProvider>().clearOrden();
+                              context.read<Proveedor>().clearOrden();
                             } else {
                               homeViewModel.addOrder(ordenNueva);
                             }
@@ -146,14 +173,14 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                           }
                         }
                       : null,
-                  child: Text( esEdicion ? 'GUARDAR CAMBIOS' : 'GUARDAR PEDIDO',
+                  child: Text( esEdicion ? 'ACTUALIZAR ' : 'GUARDAR',
                   ),
                 ),
               ],
             ),
 
             const SizedBox(height: 10),
-            const Text('PRODUCTOS',
+            const Text('LISTADO',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -166,11 +193,14 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
             Expanded(
               child: viewModel.productosSeleccionados.isEmpty
                   ? Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
                       color: Colors.grey[200],
-                      child: const Center(
-                        child: Text('Orden sin productos'),
-                      ),
-                    )
+                    ),
+                    child: const Center(
+                      child: Text('Orden sin productos'),
+                    ),
+                  )
                   : ListView.builder(
                       itemCount: viewModel.productosSeleccionados.length,
                       itemBuilder: (context, index) {
@@ -199,7 +229,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                         );
                       },
                     ),
-            ),
+                  ),
 
             const SizedBox(height: 10),
             Text(

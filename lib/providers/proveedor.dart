@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pruebas_bar/models/Orden.dart';
 
-class OrdenProvider extends ChangeNotifier {
+class Proveedor extends ChangeNotifier {
   Orden? _ordenActual;
 
   Orden? get ordenActual => _ordenActual;
