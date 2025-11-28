@@ -27,7 +27,7 @@ class BarApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           if (settings.name == '/resumen') {
             return MaterialPageRoute(
-              builder: (context) => const ResumenOrdenView(),
+              builder: (context) => const ResumenOrdenView( productosActuales: []),
             );
           } else if (settings.name == '/crear') {
             return MaterialPageRoute(

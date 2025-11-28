@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/providers/proveedor.dart';
 
 class ResumenOrdenView extends StatelessWidget {
-  const ResumenOrdenView({super.key});
+  const ResumenOrdenView({super.key, required List<Producto> productosActuales});
 
   @override
   Widget build(BuildContext context) {

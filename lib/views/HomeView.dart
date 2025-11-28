@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pruebas_bar/models/Orden.dart';
+import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/providers/proveedor.dart';
 
@@ -16,6 +18,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
+    viewModel.ordenes = loadOrdenes(context);
     viewModel.addListener(() {
       setState(() {});
     });
@@ -63,23 +66,9 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     
                       subtitle: Text(
-                        "${orden.totalPrecio.toStringAsFixed(2)} € \nCantidad: ${orden.productos.length}",
+                        "${orden.totalPrecio.toStringAsFixed(2)} € \nProductos: ${orden.productos.length}",
                         style: const TextStyle(fontSize: 16),
                       ),
-                      trailing: ElevatedButton(
-                        
-                        style: ElevatedButton.styleFrom(
-                          fixedSize: Size(150, 100),
-                          backgroundColor: Colors.amberAccent,
-                          foregroundColor: Colors.black,
-                        ),
-                        child: Text('DETALLE'),
-                        onPressed: () {
-                          context.read<Proveedor>().setOrden(orden);
-                          Navigator.pushNamed(context, '/crear');
-                        },
-                      ),
-                    
                       onTap: () {
                         context.read<Proveedor>().setOrden(orden);
                         Navigator.pushNamed(context, '/resumen');
@@ -93,9 +82,29 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.amberAccent,
         child: const Icon(Icons.add, color: Colors.black),
         onPressed: () {
+          context.read<Proveedor>().clearOrden();
           Navigator.pushNamed(context, '/crear');
         },
       ),
     );
   }
+}
+
+List<Orden> loadOrdenes(BuildContext context) {
+  return [
+    Orden(
+      nombreMesa: 'Mesa 1',
+      productos: [
+        Producto(nombre: 'Hamburguesa', precio: 16.00, cantidad: 2),
+        Producto(nombre: 'Agua', precio: 1.50, cantidad: 1),
+      ],
+    ),
+    Orden(
+      nombreMesa: 'Mesa 2',
+      productos: [
+        Producto(nombre: 'Cocido', precio: 12.20, cantidad: 1),
+        Producto(nombre: 'Mayarai Energy Drink', precio: 5.00, cantidad: 2),
+      ],
+    ),
+  ];
 }

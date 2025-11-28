@@ -6,7 +6,6 @@ import 'package:pruebas_bar/viewmodel/CrearOrdenViewModel.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/views/ProductoSeleccionadoView.dart';
 import 'package:pruebas_bar/providers/proveedor.dart';
-import 'package:pruebas_bar/views/ResumenOrdenView.dart';
 
 class CrearOrdenView extends StatefulWidget {
   const CrearOrdenView({super.key});
@@ -16,7 +15,6 @@ class CrearOrdenView extends StatefulWidget {
 }
 
 class _CrearOrdenViewState extends State<CrearOrdenView> {
-
   final CrearOrdenViewModel viewModel = CrearOrdenViewModel();
   final HomeViewModel homeViewModel = HomeViewModel();
 
@@ -47,11 +45,14 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
 
   @override
   Widget build(BuildContext context) {
-    final bool estaGuardado = viewModel.nombreMesa.isNotEmpty && viewModel.productosSeleccionados.isNotEmpty;
+    final bool estaGuardado =
+        viewModel.nombreMesa.isNotEmpty &&
+        viewModel.productosSeleccionados.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PEDIDOS',
+        title: const Text(
+          'PEDIDOS',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.amberAccent,
@@ -91,28 +92,17 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(15),
                     backgroundColor: Colors.grey[200],
                     foregroundColor: Colors.black,
                   ),
-                  onPressed: () 
-                  async {
-                    final result = await 
-                    Navigator.push(
-                      context, MaterialPageRoute(
-                        builder: (context) {
-                          return ResumenOrdenView( );
-                        },
-                      ),
-                    );
-
-                    if (result != null && result is List<Producto>) {
-                      setState(() {
-                        viewModel.setProducts(result);
-                      });
+                  onPressed: () async {
+                    final Orden? ordenNueva = viewModel.crearOrden();
+                    if (ordenNueva != null) {
+                      context.read<Proveedor>().setOrden(ordenNueva);
+                      Navigator.pushNamed(context, '/resumen');
                     }
                   },
                   child: const Text('RESUMEN'),
@@ -123,13 +113,13 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                     backgroundColor: Colors.amberAccent[100],
                     foregroundColor: Colors.black,
                   ),
-                  onPressed: () 
-                  async {
-                    final result = await 
-                    Navigator.push(
-                      context, MaterialPageRoute(
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
                         builder: (context) {
-                          return ProductoSeleccionadoView( productosActuales: viewModel.productosSeleccionados,
+                          return ProductoSeleccionadoView(
+                            productosActuales: viewModel.productosSeleccionados,
                           );
                         },
                       ),
@@ -141,6 +131,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                       });
                     }
                   },
+
                   child: const Text('PRODUCTOS'),
                 ),
                 ElevatedButton(
@@ -159,7 +150,10 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                               final index = homeViewModel.ordenes.indexWhere(
                                 (orden) =>
                                     orden.nombreMesa ==
-                                    context.read<Proveedor>().ordenActual!.nombreMesa,
+                                    context
+                                        .read<Proveedor>()
+                                        .ordenActual!
+                                        .nombreMesa,
                               );
                               if (index != -1) {
                                 homeViewModel.updateOrder(index, ordenNueva);
@@ -172,14 +166,14 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                           }
                         }
                       : null,
-                  child: Text( esEdicion ? 'ACTUALIZAR ' : 'GUARDAR',
-                  ),
+                  child: Text(esEdicion ? 'ACTUALIZAR ' : 'GUARDAR'),
                 ),
               ],
             ),
 
             const SizedBox(height: 10),
-            const Text('LISTADO',
+            const Text(
+              'LISTADO',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -192,14 +186,12 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
             Expanded(
               child: viewModel.productosSeleccionados.isEmpty
                   ? Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.grey[200],
-                    ),
-                    child: const Center(
-                      child: Text('Orden sin productos'),
-                    ),
-                  )
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.grey[200],
+                      ),
+                      child: const Center(child: Text('Orden sin productos')),
+                    )
                   : ListView.builder(
                       itemCount: viewModel.productosSeleccionados.length,
                       itemBuilder: (context, index) {
@@ -228,7 +220,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
                         );
                       },
                     ),
-                  ),
+            ),
 
             const SizedBox(height: 10),
             Text(
