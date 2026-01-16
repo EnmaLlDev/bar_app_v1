@@ -1,6 +1,6 @@
 # pruebas_bar
 
-A new Flutter project.
+Aplicacion en Futter emulando el funcionamiento de un bar 
 
 ## Getting Started
 
