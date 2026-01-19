@@ -7,6 +7,7 @@ import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/views/ProductoSeleccionadoView.dart';
 import 'package:pruebas_bar/providers/proveedor.dart';
 
+/// Vista para crear o editar una orden, permitiendo ingresar el nombre de la mesa y seleccionar productos.
 class CrearOrdenView extends StatefulWidget {
   const CrearOrdenView({super.key});
 
@@ -14,6 +15,7 @@ class CrearOrdenView extends StatefulWidget {
   State<CrearOrdenView> createState() => _CrearOrdenViewState();
 }
 
+/// Estado de la vista CrearOrdenView, maneja la lógica de la interfaz y la interacción con el ViewModel.
 class _CrearOrdenViewState extends State<CrearOrdenView> {
   final CrearOrdenViewModel viewModel = CrearOrdenViewModel();
   final HomeViewModel homeViewModel = HomeViewModel();
@@ -22,6 +24,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
 
   bool esEdicion = false;
 
+  /// Inicializa el estado, cargando datos si es una edición.
   @override
   void initState() {
     super.initState();
@@ -43,6 +46,7 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
     super.dispose();
   }
 
+  /// Construye la interfaz de usuario de la vista con un Widget de tipo Scaffold. (Creacion de Pedidos, seleccion de productos, resumen de pedido)
   @override
   Widget build(BuildContext context) {
     final bool estaGuardado =

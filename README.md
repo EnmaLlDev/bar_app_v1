@@ -1,16 +1,18 @@
-# pruebas_bar
+# UD 4 App - Bar
 
-Aplicacion en Futter emulando el funcionamiento de un bar 
+## Descripcion
 
-## Getting Started
+Aplicación en Flutter emulando el funcionamiento de un bar, permitiendo a los usuarios crear órdenes, seleccionar productos y visualizar resúmenes de pedidos.
 
-This project is a starting point for a Flutter application.
+## Tecnologías Utilizadas
 
-A few resources to get you started if this is your first Flutter project:
+- **Flutter**: Framework para el desarrollo de aplicaciones móviles multiplataforma.
+- **Dart**: Lenguaje de programación utilizado por Flutter.
+- **Provider**: Librería para la gestión del estado de la aplicación.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Funciones Principales
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Vista de Inicio**: Pantalla principal de la aplicación.
+- **Crear Orden**: Permite a los usuarios crear nuevas órdenes.
+- **Seleccionar Producto**: Interfaz para elegir productos y agregarlos a la orden.
+- **Resumen de Orden**: Muestra un resumen detallado de la orden creada.

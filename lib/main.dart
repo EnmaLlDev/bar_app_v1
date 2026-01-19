@@ -5,13 +5,16 @@ import 'views/CrearOrdenView.dart';
 import 'views/ResumenOrdenView.dart';
 import 'providers/proveedor.dart';
 
+/// Función principal que inicia la aplicación Flutter.
 void main() {
   runApp(const BarApp());
 }
 
+/// Widget raíz de la aplicación, configura el MultiProvider y las rutas de navegacion.
 class BarApp extends StatelessWidget {
   const BarApp({super.key});
 
+  /// Construye el árbol de widgets de la aplicación, organiza los providers y la navegación.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

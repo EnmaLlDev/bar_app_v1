@@ -3,9 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/providers/proveedor.dart';
 
+/// Vista para mostrar el resumen de una orden (nombre de la mesa, productos y precio total).
 class ResumenOrdenView extends StatelessWidget {
   const ResumenOrdenView({super.key, required List<Producto> productosActuales});
 
+  /// Construye la interfaz de usuario del resumen de la orden.
   @override
   Widget build(BuildContext context) {
     final order = context.watch<Proveedor>().ordenActual;

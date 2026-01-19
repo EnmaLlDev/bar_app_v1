@@ -1,11 +1,12 @@
 import 'Producto.dart';
 
+/// Representa una orden de una mesa en el bar(nombre de la mesa y la lista de productos pedidos).
 class Orden {
   final String nombreMesa;
   final List<Producto> productos;
 
   Orden({
-    required this.nombreMesa, 
+    required this.nombreMesa,
     required this.productos});
 
   int get totalProductos {

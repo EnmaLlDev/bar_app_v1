@@ -5,6 +5,7 @@ import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/viewmodel/HomeViewModel.dart';
 import 'package:pruebas_bar/providers/proveedor.dart';
 
+/// Vista principal de la aplicación, muestra la lista de órdenes creadas.
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -12,9 +13,11 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
+/// Estado de la vista HomeView, maneja la carga de órdenes y la construcción de la interfaz.
 class _HomeViewState extends State<HomeView> {
   final HomeViewModel viewModel = HomeViewModel();
 
+  /// Inicializa el estado, cargando las órdenes y configurando el listener.
   @override
   void initState() {
     super.initState();
@@ -24,6 +27,7 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+  /// Construye la interfaz de usuario de la vista principal.(ordenes creadas con detalles referenciales y boton para crear nuevas ordenes)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +94,7 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
+/// Función para cargar órdenes de ejemplo en la aplicación.
 List<Orden> loadOrdenes(BuildContext context) {
   return [
     Orden(
