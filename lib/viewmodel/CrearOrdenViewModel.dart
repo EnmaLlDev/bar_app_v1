@@ -6,10 +6,12 @@ class CrearOrdenViewModel {
   String nombreMesa = "";
   List<Producto> productosSeleccionados = [];
 
+  /// Establece el nombre de la mesa para la orden.
   void setTableName(String nombre) {
     nombreMesa = nombre;
   }
 
+  /// Establece la lista de productos seleccionados para la orden.
   void setProducts(List<Producto> productos) {
     productosSeleccionados = productos;
   }

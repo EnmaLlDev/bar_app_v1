@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pruebas_bar/models/Producto.dart';
 import 'package:pruebas_bar/viewmodel/ProductoSeleccionadoViewModel.dart';
 
-/// Vista para seleccionar productos del bar.
+/// Vista para seleccionar productos del bar, permitiendo incrementar o decrementar cantidades.
 class ProductoSeleccionadoView extends StatefulWidget {
   final List<Producto>? productosActuales;
   
+  /// Constructor para crear la vista con productos actuales opcionales.
   const ProductoSeleccionadoView({super.key, this.productosActuales});
 
   @override
@@ -17,6 +18,7 @@ class ProductoSeleccionadoView extends StatefulWidget {
 class _ProductoSeleccionadoViewState extends State<ProductoSeleccionadoView> {
   final ProductoSeleccionadoViewModel viewModel = ProductoSeleccionadoViewModel();
 
+  /// Inicializa el estado, cargando productos existentes si se proporcionan.
   @override
   void initState() {
     super.initState();
