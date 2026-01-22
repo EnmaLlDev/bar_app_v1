@@ -13,7 +13,6 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-/// Estado de la vista HomeView, maneja la carga de órdenes y la construcción de la interfaz.
 class _HomeViewState extends State<HomeView> {
   final HomeViewModel viewModel = HomeViewModel();
 
@@ -55,40 +54,58 @@ class _HomeViewState extends State<HomeView> {
                   final orden = viewModel.ordenes[index];
                   return Padding(
                     padding: const EdgeInsets.all(8),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                      tileColor: Colors.grey[200],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      title: Text(
-                        orden.nombreMesa,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                    child: Tooltip(
+                      message: 'Tocar para ver resumen',
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        tileColor: Colors.grey[200],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        title: Text(
+                          orden.nombreMesa,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      
+                        subtitle: Text(
+                          "${orden.totalPrecio.toStringAsFixed(2)} € \nProductos: ${orden.productos.length}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        onTap: () {
+                          context.read<Proveedor>().setOrden(orden);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Navegando a resumen de ${orden.nombreMesa}'),
+                              backgroundColor: Colors.amberAccent[400],
+                            ),
+                          );
+                          Navigator.pushNamed(context, '/resumen');
+                        },
                       ),
-                    
-                      subtitle: Text(
-                        "${orden.totalPrecio.toStringAsFixed(2)} € \nProductos: ${orden.productos.length}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      onTap: () {
-                        context.read<Proveedor>().setOrden(orden);
-                        Navigator.pushNamed(context, '/resumen');
-                      },
                     ),
                   );
                 },
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.amberAccent,
-        child: const Icon(Icons.add, color: Colors.black),
-        onPressed: () {
-          context.read<Proveedor>().clearOrden();
-          Navigator.pushNamed(context, '/crear');
-        },
+      floatingActionButton: Tooltip(
+        message: 'Crear nueva orden',
+        child: FloatingActionButton(
+          backgroundColor: Colors.amberAccent,
+          child: const Icon(Icons.add, color: Colors.black),
+          onPressed: () {
+            context.read<Proveedor>().clearOrden();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Creando nueva orden'),
+                backgroundColor: Colors.green,
+              ),
+            );
+            Navigator.pushNamed(context, '/crear');
+          },
+        ),
       ),
     );
   }

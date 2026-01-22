@@ -93,9 +93,12 @@ Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: Colors.white,
     appBar: AppBar(
-      title: Text(&quot;RESUMEN&quot;,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
+      title: Tooltip(
+        message: &#39;Resumen de la orden actual&#39;,
+        child: const Text(&quot;RESUMEN&quot;,
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+      ),
       backgroundColor: Colors.amberAccent,
       ),
     body: Column(

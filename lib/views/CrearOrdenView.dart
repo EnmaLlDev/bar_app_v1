@@ -96,81 +96,140 @@ class _CrearOrdenViewState extends State<CrearOrdenView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(15),
-                    backgroundColor: Colors.grey[200],
-                    foregroundColor: Colors.black,
+                Tooltip(
+                  message: 'Ver el resumen de la orden actual',
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(15),
+                      backgroundColor: Colors.grey[200],
+                      foregroundColor: Colors.black,
+                    ),
+                    onPressed: () async {
+                      if (viewModel.nombreMesa.length < 2) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('El nombre de la mesa debe tener al menos 2 caracteres'),
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        );
+                        return;
+                      }
+                      if (viewModel.productosSeleccionados.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Debes seleccionar al menos un producto'),
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        );
+                        return;
+                      }
+                      final Orden? ordenNueva = viewModel.crearOrden();
+                      if (ordenNueva != null) {
+                        context.read<Proveedor>().setOrden(ordenNueva);
+                        Navigator.pushNamed(context, '/resumen');
+                      }
+                    },
+                    child: const Text('RESUMEN'),
                   ),
-                  onPressed: () async {
-                    final Orden? ordenNueva = viewModel.crearOrden();
-                    if (ordenNueva != null) {
-                      context.read<Proveedor>().setOrden(ordenNueva);
-                      Navigator.pushNamed(context, '/resumen');
-                    }
-                  },
-                  child: const Text('RESUMEN'),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(15),
-                    backgroundColor: Colors.amberAccent[100],
-                    foregroundColor: Colors.black,
+                Tooltip(
+                  message: 'Seleccionar productos para la orden',
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(15),
+                      backgroundColor: Colors.amberAccent[100],
+                      foregroundColor: Colors.black,
+                    ),
+                    onPressed: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ProductoSeleccionadoView(
+                              productosActuales: viewModel.productosSeleccionados,
+                            );
+                          },
+                        ),
+                      );
+
+                      if (result != null && result is List<Producto>) {
+                        setState(() {
+                          viewModel.setProducts(result);
+                        });
+                      }
+                    },
+
+                    child: const Text('PRODUCTOS'),
                   ),
-                  onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ProductoSeleccionadoView(
-                            productosActuales: viewModel.productosSeleccionados,
-                          );
-                        },
-                      ),
-                    );
-
-                    if (result != null && result is List<Producto>) {
-                      setState(() {
-                        viewModel.setProducts(result);
-                      });
-                    }
-                  },
-
-                  child: const Text('PRODUCTOS'),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: estaGuardado
-                        ? Colors.amberAccent
-                        : Colors.grey[400],
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.all(15),
-                  ),
-                  onPressed: estaGuardado
-                      ? () {
-                          final Orden? ordenNueva = viewModel.crearOrden();
-                          if (ordenNueva != null) {
-                            if (esEdicion) {
-                              final index = homeViewModel.ordenes.indexWhere(
-                                (orden) =>
-                                    orden.nombreMesa ==
-                                    context
-                                        .read<Proveedor>()
-                                        .ordenActual!
-                                        .nombreMesa,
+                Tooltip(
+                  message: 'Guardar o actualizar la orden',
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: estaGuardado
+                          ? Colors.amberAccent
+                          : Colors.grey[400],
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    onPressed: estaGuardado
+                        ? () {
+                            if (viewModel.nombreMesa.length < 2) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('El nombre de la mesa debe tener al menos 2 caracteres'),
+                                  backgroundColor: Colors.redAccent,
+                                ),
                               );
-                              if (index != -1) {
-                                homeViewModel.updateOrder(index, ordenNueva);
-                              }
-                              context.read<Proveedor>().clearOrden();
-                            } else {
-                              homeViewModel.addOrder(ordenNueva);
+                              return;
                             }
-                            Navigator.pop(context);
+                            if (viewModel.productosSeleccionados.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Debes seleccionar al menos un producto'),
+                                  backgroundColor: Colors.redAccent,
+                                ),
+                              );
+                              return;
+                            }
+                            final Orden? ordenNueva = viewModel.crearOrden();
+                            if (ordenNueva != null) {
+                              if (esEdicion) {
+                                final index = homeViewModel.ordenes.indexWhere(
+                                  (orden) =>
+                                      orden.nombreMesa ==
+                                      context
+                                          .read<Proveedor>()
+                                          .ordenActual!
+                                          .nombreMesa,
+                                );
+                                if (index != -1) {
+                                  homeViewModel.updateOrder(index, ordenNueva);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Orden actualizada exitosamente'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
+                                }
+                                context.read<Proveedor>().clearOrden();
+                              } else {
+                                homeViewModel.addOrder(ordenNueva);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Orden guardada exitosamente'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              }
+                              Future.delayed(const Duration(milliseconds: 500), () {
+                                Navigator.pop(context);
+                              });
+                            }
                           }
-                        }
-                      : null,
-                  child: Text(esEdicion ? 'ACTUALIZAR ' : 'GUARDAR'),
+                        : null,
+                    child: Text(esEdicion ? 'ACTUALIZAR ' : 'GUARDAR'),
+                  ),
                 ),
               ],
             ),

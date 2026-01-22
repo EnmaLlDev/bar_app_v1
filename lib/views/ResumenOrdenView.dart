@@ -26,9 +26,12 @@ class ResumenOrdenView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("RESUMEN", 
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
+        title: Tooltip(
+          message: 'Resumen de la orden actual',
+          child: const Text("RESUMEN", 
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+        ),
         backgroundColor: Colors.amberAccent,  
         ),
       body: Column(
