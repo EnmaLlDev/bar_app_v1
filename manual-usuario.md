@@ -15,7 +15,6 @@
 
 ---
 
-\newpage
 
 ## Índice
 
