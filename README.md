@@ -1,4 +1,4 @@
-# UD 4 App - Bar
+# App - Bar
 
 ## Descripcion
 
