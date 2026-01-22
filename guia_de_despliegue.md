@@ -260,8 +260,23 @@ flutter run -d <device_id> --release
 4. Carga el archivo IPA utilizando Xcode o Transporter
 5. Completa los detalles de promoción
 6. Envía para revisión
-
 ---
+
+## Despliegue en Web
+
+Para el enotrno Web debemos:
+
+Ejecuta el comando: 
+
+flutter build web 
+
+Los archivos se generaran en la carpeta:
+
+build/web
+
+Para probarlo localmente puedes usar:
+
+flutter run -d chrome
 
 **Última actualización:** Enero 2026
 

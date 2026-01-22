@@ -2,16 +2,11 @@
 
 ## Manual de Usuario
 
-
-![UD 4 App - Bar](https://img.shields.io/badge/UD%204%20App--Bar-v1.0.1-blue)
-
 **Versión:** 1.0.1
 
 **Fecha:** Enero 2026
 
 **Desarrollado por:** Enmanuel Lledo
-
-**Contacto:** enmanuel.lledo.1998@gmail.com
 
 ---
 
@@ -21,8 +16,7 @@
 1. [Descripción de la Aplicación](#descripción-de-la-aplicación)
 2. [Funciones Principales](#acciones-principales)
 3. [Preguntas Frecuentes](#preguntas-frecuentes)
-4. [Guia de despliegue](#guia-despliegue)
-5. [Contacto y Soporte](#contacto-y-soporte)
+4. [Contacto y Soporte](#contacto-y-soporte)
 
 ---
 
@@ -120,17 +114,9 @@ Los productos disponibles en el bar incluyen:
 - Comidas (Hamburguesa, Cocido)
 - Otros productos especiales
 
-### ¿Cómo calcula el precio total?
-
-El precio total se calcula automáticamente multiplicando el precio unitario de cada producto por la cantidad seleccionada, y sumando todos los subtotales.
-
 ### ¿Qué sucede si cancelo la selección de productos?
 
 Si presiona "CANCELAR" en la pantalla de selección de productos, todos los cambios realizados se descartan y vuelve a la pantalla anterior sin guardar nada.
-
-### ¿Puedo eliminar un producto después de crear la orden?
-
-Actualmente, el sistema no permite eliminar productos individuales de una orden existente. Puede crear una nueva orden con los productos correctos.
 
 ### ¿La aplicación guarda mis órdenes?
 
@@ -139,10 +125,6 @@ Las órdenes se mantienen durante la sesión actual de la aplicación. Al cerrar
 ### ¿Cuál es el límite de productos por orden?
 
 No hay límite en la cantidad de productos diferentes que puede agregar a una orden, ni límite en la cantidad de cada producto.
-
-### ¿Cómo vuelvo a la pantalla anterior?
-
-- Puede presionar el botón de retroceso del dispositivo o el botón "Atrás" en la barra de navegación superior
 
 ### ¿Es necesario estar conectado a internet?
 
@@ -156,9 +138,6 @@ No, la aplicación funciona completamente offline sin requerir conexión a inter
 
 **Correo Electrónico:** enmanuel.lledo.1998@gmail.com
 
-**Modulo:** Desarrollo de Interfaces
-
-**Versión de la Aplicación:** 1.0.1
 
 ### Reportar Problemas
 
@@ -192,4 +171,3 @@ Sus comentarios y sugerencias son muy valiosos para nosotros. Si tiene ideas par
 
 **Última actualización:** Enero 2026
 
-**© 2026 App - Bar. Todos los derechos reservados.**
